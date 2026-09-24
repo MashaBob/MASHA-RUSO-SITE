@@ -799,3 +799,6 @@ footer .brand,footer a{
   .test-result{grid-column:auto}
   .test-card{padding:22px}
 }
+
+/* Linked individual-class benefits */
+.lesson-benefits a{padding:9px 13px;border:1px solid #34243322;border-radius:22px;font-size:12px;text-decoration:none;color:#251c25;background:#fffaf4;transition:transform .2s ease,background .2s ease,box-shadow .2s ease}.lesson-benefits a:hover{transform:translateY(-3px);background:#bc4051;color:#fff;box-shadow:0 5px 0 #7d2734}.lesson-benefits a b{margin-left:5px}
