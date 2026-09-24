@@ -56,3 +56,26 @@ checkout.onclick=()=>{
 };
 document.querySelector('#close-payment').onclick=()=>payment.classList.remove('show');
 render();
+
+/* Layered game-like motion in the hero: works with mouse and touch. */
+const hero = document.querySelector(".hero");
+if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  hero.insertAdjacentHTML("beforeend", '<i class="hero-spark"></i><i class="hero-spark"></i><i class="hero-spark"></i>');
+  const moveScene = (clientX, clientY) => {
+    const box = hero.getBoundingClientRect();
+    const x = Math.max(-1, Math.min(1, (clientX - box.left) / box.width * 2 - 1));
+    const y = Math.max(-1, Math.min(1, (clientY - box.top) / box.height * 2 - 1));
+    hero.style.setProperty("--scene-x", `${x * -16}px`);
+    hero.style.setProperty("--scene-y", `${y * -9}px`);
+    hero.style.setProperty("--card-x", `${x * 9}px`);
+    hero.style.setProperty("--card-y", `${y * 7}px`);
+  };
+  hero.addEventListener("pointermove", (event) => moveScene(event.clientX, event.clientY));
+  hero.addEventListener("touchmove", (event) => {
+    const finger = event.touches[0];
+    if (finger) moveScene(finger.clientX, finger.clientY);
+  }, { passive: true });
+  hero.addEventListener("pointerleave", () => {
+    ["--scene-x","--scene-y","--card-x","--card-y"].forEach((name) => hero.style.setProperty(name, "0px"));
+  });
+}
