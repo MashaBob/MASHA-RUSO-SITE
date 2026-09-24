@@ -712,3 +712,56 @@ footer .brand,footer a{
 @media (prefers-reduced-motion:reduce){
   .rain-drop,.falling-leaf{animation:none;display:none}
 }
+
+/* More natural weather: layered rain and autumn leaves */
+.weather{
+  background:linear-gradient(180deg,rgba(23,31,39,.08),transparent 46%,rgba(29,22,17,.12));
+}
+.rain-drop{
+  width:1.3px;
+  height:var(--rain-length);
+  background:linear-gradient(to bottom,transparent 0%,rgba(213,231,242,.82) 55%,rgba(255,255,255,.94) 100%);
+  opacity:.56;
+  filter:blur(.15px);
+  transform:rotate(14deg);
+  animation:rain-fall var(--rain-speed) linear infinite;
+}
+.rain-drop.rain-front{
+  width:1.8px;
+  opacity:.83;
+  filter:blur(.35px);
+  box-shadow:0 0 7px rgba(204,230,244,.38);
+}
+.falling-leaf{
+  width:var(--leaf-size);
+  height:calc(var(--leaf-size) * .62);
+  color:transparent;
+  background:linear-gradient(135deg,var(--leaf-color),#5e231b);
+  border-radius:100% 0 100% 0;
+  box-shadow:inset -3px -2px 5px rgba(42,14,8,.24),0 3px 7px rgba(32,19,13,.28);
+  opacity:.9;
+  animation:leaf-fall var(--leaf-speed) cubic-bezier(.3,.08,.62,.94) infinite;
+}
+.falling-leaf:after{
+  content:"";
+  position:absolute;
+  width:8px;
+  height:1px;
+  background:#593329;
+  right:-6px;
+  bottom:0;
+  transform:rotate(-28deg);
+  transform-origin:left;
+}
+@keyframes rain-fall{
+  from{transform:translate3d(0,-15vh,0) rotate(14deg);opacity:0}
+  9%{opacity:var(--rain-opacity)}
+  to{transform:translate3d(-150px,118vh,0) rotate(14deg);opacity:.08}
+}
+@keyframes leaf-fall{
+  0%{transform:translate3d(0,-12vh,0) rotate(20deg);opacity:0}
+  8%{opacity:.88}
+  35%{transform:translate3d(var(--leaf-drift),30vh,0) rotate(170deg)}
+  68%{transform:translate3d(var(--leaf-return),66vh,0) rotate(320deg)}
+  100%{transform:translate3d(var(--leaf-drift),112vh,0) rotate(520deg);opacity:0}
+}
