@@ -765,3 +765,37 @@ footer .brand,footer a{
   68%{transform:translate3d(var(--leaf-return),66vh,0) rotate(320deg)}
   100%{transform:translate3d(var(--leaf-drift),112vh,0) rotate(520deg);opacity:0}
 }
+
+/* Level test and WhatsApp recommendation */
+.level-test{
+  background:#251c25;
+  color:#fffaf4;
+  padding:100px 10vw;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  gap:55px;
+  align-items:start;
+}
+.level-test .eyebrow{color:#ef9a91}
+.level-test h2{font-size:clamp(42px,5vw,64px)}
+.level-test h2 i{color:#ef9a91}
+.test-intro>p:not(.eyebrow){font-size:16px;line-height:1.65;max-width:380px}
+.test-intro span{display:inline-block;margin-top:17px;color:#f0c793;font-size:13px}
+.test-card{background:#fffaf4;color:#251c25;padding:30px;box-shadow:14px 14px 0 #bc4051;border-radius:3px}
+.student-name{display:block;font-weight:700;font-size:14px;margin-bottom:24px}
+.student-name input{display:block;width:100%;padding:13px 14px;margin-top:8px;border:1px solid #342433;background:#fff;border-radius:2px;font:15px 'DM Sans'}
+.test-card fieldset{border:0;border-top:1px solid #d7cbc1;padding:18px 0 7px;margin:0}
+.test-card legend{font-weight:700;font-size:15px;line-height:1.4;padding:0 0 9px}
+.test-card fieldset label{display:block;padding:7px 0;font-size:14px;cursor:pointer}
+.test-card input[type="radio"]{accent-color:#bc4051;margin-right:8px}
+.test-submit{margin-top:18px;width:100%;justify-content:space-between}
+.test-result{grid-column:2;background:#ead4bd;color:#251c25;display:none;padding:30px;border-left:5px solid #bc4051}
+.test-result.show{display:block}
+.test-result h3{font-size:34px;margin:7px 0 12px}
+.test-result p{line-height:1.55}
+.whatsapp-result{margin-top:16px;background:#25d366;box-shadow:none;justify-content:center}
+@media(max-width:720px){
+  .level-test{grid-template-columns:1fr;padding:75px 24px;gap:28px}
+  .test-result{grid-column:auto}
+  .test-card{padding:22px}
+}
