@@ -63,8 +63,16 @@ if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   hero.insertAdjacentHTML("beforeend", '<div class="weather" aria-hidden="true"></div><i class="hero-spark"></i><i class="hero-spark"></i><i class="hero-spark"></i>');
   const weather = hero.querySelector(".weather");
   if (weather) {
-    const rain = Array.from({ length: 30 }, (_, index) => `<i class="rain-drop" style="left:${(index * 13 + 4) % 100}%;animation-duration:${.7 + (index % 8) * .12}s;animation-delay:-${index * .21}s"></i>`).join("");
-    const leaves = Array.from({ length: 9 }, (_, index) => `<i class="falling-leaf" style="left:${(index * 19 + 7) % 96}%;--leaf-speed:${7 + index % 4}s;--leaf-drift:${36 + index * 7}px;animation-delay:-${index * .9}s">🍂</i>`).join("");
+    const rain = Array.from({ length: 64 }, (_, index) => {
+      const front = index % 3 === 0 ? " rain-front" : "";
+      const length = 34 + index % 5 * 10;
+      return `<i class="rain-drop${front}" style="left:${(index * 17 + 3) % 100}%;--rain-length:${length}px;--rain-speed:${.78 + index % 9 * .13}s;--rain-opacity:${front ? ".84" : ".46"};animation-delay:-${index * .17}s"></i>`;
+    }).join("");
+    const leafColors = ["#b84d2d","#9a3e26","#c46c2f","#7d3827"];
+    const leaves = Array.from({ length: 13 }, (_, index) => {
+      const drift = 34 + index * 8;
+      return `<i class="falling-leaf" style="left:${(index * 23 + 9) % 96}%;--leaf-speed:${8 + index % 5}s;--leaf-drift:${drift}px;--leaf-return:-${drift}px;--leaf-size:${15 + index % 4 * 3}px;--leaf-color:${leafColors[index % leafColors.length]};animation-delay:-${index * .85}s"></i>`;
+    }).join("");
     weather.innerHTML = rain + leaves;
   }
   const moveScene = (clientX, clientY) => {
