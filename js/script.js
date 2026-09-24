@@ -60,7 +60,13 @@ render();
 /* Layered game-like motion in the hero: works with mouse and touch. */
 const hero = document.querySelector(".hero");
 if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  hero.insertAdjacentHTML("beforeend", '<i class="hero-spark"></i><i class="hero-spark"></i><i class="hero-spark"></i>');
+  hero.insertAdjacentHTML("beforeend", '<div class="weather" aria-hidden="true"></div><i class="hero-spark"></i><i class="hero-spark"></i><i class="hero-spark"></i>');
+  const weather = hero.querySelector(".weather");
+  if (weather) {
+    const rain = Array.from({ length: 30 }, (_, index) => `<i class="rain-drop" style="left:${(index * 13 + 4) % 100}%;animation-duration:${.7 + (index % 8) * .12}s;animation-delay:-${index * .21}s"></i>`).join("");
+    const leaves = Array.from({ length: 9 }, (_, index) => `<i class="falling-leaf" style="left:${(index * 19 + 7) % 96}%;--leaf-speed:${7 + index % 4}s;--leaf-drift:${36 + index * 7}px;animation-delay:-${index * .9}s">🍂</i>`).join("");
+    weather.innerHTML = rain + leaves;
+  }
   const moveScene = (clientX, clientY) => {
     const box = hero.getBoundingClientRect();
     const x = Math.max(-1, Math.min(1, (clientX - box.left) / box.width * 2 - 1));
