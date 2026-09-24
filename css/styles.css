@@ -88,7 +88,7 @@ nav a{
   position:relative;
   overflow:hidden;
   isolation:isolate;
-  background:linear-gradient(90deg,rgba(255,250,244,.97) 0%,rgba(255,250,244,.87) 38%,rgba(255,250,244,.22) 72%),url("../assets/masha-ruso-3d-hero.jpg") center / cover no-repeat,var(--cream)
+  background:linear-gradient(90deg,rgba(255,250,244,.96) 0%,rgba(255,250,244,.84) 40%,rgba(255,250,244,.18) 73%),url("../assets/red-square-3d-hero.jpg") center / cover no-repeat,var(--cream)
 }
 .hero:after{
   content:'Я · РУССКИЙ · Я · РУССКИЙ · Я · РУССКИЙ';
