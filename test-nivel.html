@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Masha Ruso · Escuela online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=experience-4">
+  <link rel="stylesheet" href="css/experiencia.css?v=experience-4">
+</head>
+<body class="experience-page">
+  <header><a class="brand" href="index.html"><span>М</span> masha_ruso</a><nav><a href="index.html#cursos">Cursos</a><a href="test-nivel.html">Test de nivel</a><a href="reservar.html">Reservar</a></nav></header>
+<main class="experience-main">
+  <a class="back-link" href="index.html#cursos">← Volver a clases individuales</a>
+  <section class="experience-hero">
+    <p class="eyebrow">TEST DE NIVEL · HASTA B2</p>
+    <h1>Encuentra tu<br><i>nivel de ruso.</i></h1>
+    <p>Son 10 preguntas. Es una orientación inicial, no un examen oficial; Masha podrá confirmarlo contigo en una clase de prueba.</p>
+  </section>
+  <form id="b2-test" class="experience-card quiz-card">
+    <label class="form-label">Tu nombre<input required name="name" placeholder="¿Cómo te llamas?"></label>
+    <fieldset><legend>1. «Привет» significa:</legend><label><input type="radio" name="q1" value="a"> Gracias</label><label><input type="radio" name="q1" value="b"> Hola</label><label><input type="radio" name="q1" value="c"> Adiós</label></fieldset>
+    <fieldset><legend>2. Меня ___ Анна.</legend><label><input type="radio" name="q2" value="a"> зовут</label><label><input type="radio" name="q2" value="b"> зовёт</label><label><input type="radio" name="q2" value="c"> зовите</label></fieldset>
+    <fieldset><legend>3. ¿Cuál frase es correcta para pedir un café?</legend><label><input type="radio" name="q3" value="a"> Мне кофе, пожалуйста</label><label><input type="radio" name="q3" value="b"> Я кофе есть</label><label><input type="radio" name="q3" value="c"> Кофе меня</label></fieldset>
+    <fieldset><legend>4. «Вчера я ___ в Москве»</legend><label><input type="radio" name="q4" value="a"> был</label><label><input type="radio" name="q4" value="b"> буду</label><label><input type="radio" name="q4" value="c"> есть</label></fieldset>
+    <fieldset><legend>5. «Я хочу, чтобы ты ___ мне»</legend><label><input type="radio" name="q5" value="a"> помог</label><label><input type="radio" name="q5" value="b"> помогаешь</label><label><input type="radio" name="q5" value="c"> помогать</label></fieldset>
+    <fieldset><legend>6. Elige la forma correcta: «Если бы у меня было время, я ___ больше».</legend><label><input type="radio" name="q6" value="a"> путешествовал бы</label><label><input type="radio" name="q6" value="b"> путешествую</label><label><input type="radio" name="q6" value="c"> путешествовать</label></fieldset>
+    <fieldset><legend>7. «Несмотря на дождь, мы ___ гулять».</legend><label><input type="radio" name="q7" value="a"> пошли</label><label><input type="radio" name="q7" value="b"> пойдём</label><label><input type="radio" name="q7" value="c"> идти</label></fieldset>
+    <fieldset><legend>8. ¿Qué expresa «мне бы хотелось»?</legend><label><input type="radio" name="q8" value="a"> Un deseo cortés</label><label><input type="radio" name="q8" value="b"> Una orden</label><label><input type="radio" name="q8" value="c"> Pasado terminado</label></fieldset>
+    <fieldset><legend>9. «Он сказал, что ___ завтра».</legend><label><input type="radio" name="q9" value="a"> придёт</label><label><input type="radio" name="q9" value="b"> пришёл</label><label><input type="radio" name="q9" value="c"> приходил</label></fieldset>
+    <fieldset><legend>10. «Я не думаю, что он ___».</legend><label><input type="radio" name="q10" value="a"> прав</label><label><input type="radio" name="q10" value="b"> правда</label><label><input type="radio" name="q10" value="c"> правильно</label></fieldset>
+    <button class="button test-submit" type="submit">Ver mi resultado <span>→</span></button>
+  </form>
+  <section id="b2-result" class="result-panel" aria-live="polite"></section>
+</main>
+<script src="js/test-nivel.js?v=experience-4"></script>
+</body></html>
