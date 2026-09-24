@@ -93,3 +93,32 @@ if (hero && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     ["--scene-x","--scene-y","--card-x","--card-y"].forEach((name) => hero.style.setProperty(name, "0px"));
   });
 }
+
+/* Instant level assessment with a prefilled WhatsApp message for Masha. */
+const levelForm = document.querySelector("#level-form");
+const levelResult = document.querySelector("#test-result");
+if (levelForm && levelResult) {
+  const correct = { q1: "b", q2: "a", q3: "b", q4: "b", q5: "a" };
+  levelForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(levelForm);
+    const unanswered = Object.keys(correct).some((question) => !data.get(question));
+    if (unanswered) {
+      levelResult.className = "test-result show";
+      levelResult.innerHTML = "<p>Por favor responde las cinco preguntas para ver tu resultado.</p>";
+      return;
+    }
+    const score = Object.entries(correct).reduce((total, [question, answer]) => total + (data.get(question) === answer ? 1 : 0), 0);
+    const recommendation = score <= 1
+      ? { level: "A0 · Desde cero", course: "Mini curso «Ruso desde cero» + clase individual de prueba", plan: "Empezaremos con el alfabeto, presentaciones, frases esenciales y pronunciación." }
+      : score <= 3
+        ? { level: "A1 · Básico", course: "Paquete de 5 clases individuales", plan: "Reforzaremos conversación, verbos frecuentes y situaciones reales para viajar o conocer gente." }
+        : { level: "A2 · Básico alto", course: "Paquete de 7 clases individuales o Club de conversación", plan: "Trabajaremos fluidez, comprensión y conversación natural con correcciones personalizadas." };
+    const name = String(data.get("student-name")).trim();
+    const answers = Object.keys(correct).map((question, index) => `Pregunta ${index + 1}: ${data.get(question) === correct[question] ? "correcta" : "por reforzar"}`).join("\n");
+    const message = encodeURIComponent(`Hola Masha, soy ${name}.\n\nResultado del test de ruso:\nNivel: ${recommendation.level}\nPuntaje: ${score}/5\nRecomendación: ${recommendation.course}\nPlan: ${recommendation.plan}\n\nDetalle:\n${answers}`);
+    levelResult.className = "test-result show";
+    levelResult.innerHTML = `<p class="eyebrow">TU RESULTADO</p><h3>${recommendation.level}</h3><p><b>Plan recomendado:</b> ${recommendation.plan}</p><p><b>Para ti:</b> ${recommendation.course}</p><a class="button whatsapp-result" target="_blank" rel="noopener" href="https://wa.me/524421562187?text=${message}">Enviar mi resultado a Masha por WhatsApp <span>↗</span></a>`;
+    levelResult.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
