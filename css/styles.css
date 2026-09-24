@@ -669,3 +669,46 @@ footer .brand,footer a{
   .hero:before,.postcard{transition:none}
   .hero-spark{animation:none}
 }
+
+/* Atmospheric layer over Red Square */
+.hero{
+  grid-template-columns:1fr;
+}
+.weather{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  overflow:hidden;
+  pointer-events:none;
+}
+.rain-drop{
+  position:absolute;
+  top:-13%;
+  width:1px;
+  height:46px;
+  background:linear-gradient(transparent,rgba(231,241,255,.72));
+  transform:rotate(13deg);
+  opacity:.55;
+  animation:rain-fall linear infinite;
+}
+.falling-leaf{
+  position:absolute;
+  top:-14%;
+  color:#a23c2d;
+  font-size:clamp(16px,2vw,28px);
+  filter:drop-shadow(0 3px 2px rgba(38,22,18,.2));
+  opacity:.82;
+  animation:leaf-fall var(--leaf-speed) cubic-bezier(.32,.12,.58,.9) infinite;
+}
+@keyframes rain-fall{
+  to{transform:translate3d(-110px,690px,0) rotate(13deg);opacity:.12}
+}
+@keyframes leaf-fall{
+  0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}
+  8%{opacity:.82}
+  55%{transform:translate3d(var(--leaf-drift),400px,0) rotate(210deg)}
+  100%{transform:translate3d(calc(var(--leaf-drift) * -1),760px,0) rotate(430deg);opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .rain-drop,.falling-leaf{animation:none;display:none}
+}
