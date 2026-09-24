@@ -122,3 +122,7 @@ if (levelForm && levelResult) {
     levelResult.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 }
+
+/* Virtual guide widget */
+const guideToggle=document.querySelector("#guide-toggle"),guidePanel=document.querySelector("#virtual-guide"),guideClose=document.querySelector("#guide-close");
+if(guideToggle&&guidePanel&&guideClose){const setGuide=open=>{guidePanel.classList.toggle("show",open);guideToggle.setAttribute("aria-expanded",String(open))};guideToggle.addEventListener("click",()=>setGuide(!guidePanel.classList.contains("show")));guideClose.addEventListener("click",()=>setGuide(false));setTimeout(()=>setGuide(true),1200)}
