@@ -1,38 +1,9 @@
 (()=> {
-  const toggle=document.querySelector("#guide-toggle"),panel=document.querySelector("#virtual-guide"),close=document.querySelector("#guide-close"),speakButton=document.querySelector("#guide-speak"),mic=document.querySelector("#guide-mic"),message=document.querySelector("#guide-message"),chat=document.querySelector("#guide-chat"),input=document.querySelector("#guide-input");
-  if(!toggle||!panel||!close)return;
-  const say=(spanish,russian)=>{
-    if(message)message.textContent=spanish;
-    if(!("speechSynthesis" in window))return;
-    window.speechSynthesis.cancel();
-    const voices=window.speechSynthesis.getVoices(),female=/female|femen|mujer|zira|paulina|dalia|helena|laura|sabina|monica|irina|elena|katya|milena/i;
-    const pick=prefix=>voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith(prefix)&&female.test(v.name))||voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith(prefix));
-    const es=pick("es"),ru=pick("ru"),spanishText=spanish.replace(/\bNika\b/gi,"tu asistente").replace(/\bMasha\b/gi,"la profesora");
-    [[spanishText,es],[russian,ru]].forEach(([text,voice])=>{if(!voice)return;const u=new SpeechSynthesisUtterance(text);u.lang=voice.lang;u.voice=voice;u.rate=.92;window.speechSynthesis.speak(u)});
-  };
-  const welcome=()=>say("Hola, me llamo Nika y seré tu ayudante durante todo el camino. Ya hiciste el primer paso. Pregúntame lo que quieras sobre ruso, clases, el test o la plataforma.","Привет, меня зовут Ника, и я буду твоей помощницей на всём пути. Ты уже сделала первый шаг. Спроси меня о русском языке, уроках, тесте или платформе.");
-  const reply=raw=>{
-    const t=raw.toLowerCase();
-    if(/nivel|test|prueba|уров/.test(t))return say("El test tiene diez preguntas y te da una orientación hasta B2. Pulsa «Hacer mi test de nivel» para empezar.","Тест состоит из десяти вопросов и определяет примерный уровень до B2. Нажми «Тест уровня», чтобы начать.");
-    if(/clase|horario|reserv|lección|урок|занят/.test(t))return say("Las clases individuales son con Masha por Zoom, con plataforma y pizarras digitales. Puedes reservar el horario que te convenga.","Индивидуальные уроки проходят с Машей в Zoom, с платформой и интерактивными досками. Ты можешь выбрать удобное время.");
-    if(/precio|cuesta|pago|pagar|precio|стоим|цен/.test(t))return say("Hay cursos desde 400 pesos y clases individuales desde 200 pesos. Puedes añadir un paquete a la canasta en la página principal.","Есть курсы от 400 песо и индивидуальные уроки от 200 песо. На главной странице можно добавить пакет в корзину.");
-    if(/plataforma|juego|practic|игр|платформ/.test(t))return say("La plataforma tiene ejercicios de palabras, práctica y pronto mostrará tu progreso. Pulsa «Jugar y practicar».","На платформе есть упражнения со словами и практика. Нажми «Играть и практиковаться».");
-    if(/hola|buenas|привет/.test(t))return say("¡Hola! Me alegra conocerte. ¿Quieres empezar con el test, una clase o una práctica?","Привет! Рада познакомиться. Хочешь начать с теста, урока или практики?");
-    return say("Entiendo. Estoy en modo de demostración, pero puedo orientarte sobre el test, las clases, precios, la plataforma y WhatsApp de la profesora.","Я понимаю. Сейчас я в демо-режиме, но могу подсказать про тест, уроки, цены, платформу и WhatsApp Маши.");
-  };
-  const open=()=>{panel.classList.add("show");toggle.setAttribute("aria-expanded","true");setTimeout(welcome,180)};
-  const hide=()=>{panel.classList.remove("show");toggle.setAttribute("aria-expanded","false");window.speechSynthesis?.cancel()};
-  toggle.addEventListener("click",()=>panel.classList.contains("show")?hide():open());close.addEventListener("click",hide);speakButton?.addEventListener("click",welcome);
-  chat?.addEventListener("submit",e=>{e.preventDefault();const text=input?.value.trim();if(!text)return;input.value="";reply(text)});
-  mic?.addEventListener("click",()=>{
-    const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-    if(!Recognition){if(message)message.textContent="Tu navegador no reconoce el micrófono. Escribe tu pregunta abajo.";return}
-    let received=false;const recognition=new Recognition();
-    recognition.lang="es-MX";recognition.interimResults=false;recognition.maxAlternatives=1;
-    if(message)message.textContent="🎙 Te escucho… habla ahora.";
-    recognition.onresult=e=>{received=true;reply(e.results[0][0].transcript)};
-    recognition.onerror=e=>{if(message)message.textContent=e.error==="not-allowed"?"Permite el micrófono en el navegador y vuelve a pulsar el botón.":"No recibí una frase. Intenta otra vez o escribe tu pregunta."};
-    recognition.onend=()=>{if(!received&&message&&message.textContent.includes("Te escucho"))message.textContent="No recibí una frase. Intenta otra vez o escribe tu pregunta."};
-    try{recognition.start()}catch{if(message)message.textContent="Pulsa el micrófono otra vez para hablar."}
-  });
+ const toggle=document.querySelector("#guide-toggle"),panel=document.querySelector("#virtual-guide"),close=document.querySelector("#guide-close"),mic=document.querySelector("#guide-mic"),speakBtn=document.querySelector("#guide-speak"),message=document.querySelector("#guide-message"),input=document.querySelector("#guide-input"),chat=document.querySelector("#guide-chat"),language=document.querySelector("#guide-language");
+ if(!toggle||!panel||!close)return;
+ const say=(es,ru)=>{if(message)message.textContent=es;if(!("speechSynthesis" in window))return;window.speechSynthesis.cancel();const vs=speechSynthesis.getVoices(),female=/female|femen|mujer|zira|paulina|dalia|helena|laura|sabina|monica|irina|elena|katya|milena/i,pick=l=>vs.find(v=>v.lang?.toLowerCase().startsWith(l)&&female.test(v.name))||vs.find(v=>v.lang?.toLowerCase().startsWith(l));[[es.replace(/\bNika\b/gi,"tu asistente").replace(/\bMasha\b/gi,"la profesora"),pick("es")],[ru,pick("ru")]].forEach(([text,v])=>{if(v){const u=new SpeechSynthesisUtterance(text);u.voice=v;u.lang=v.lang;u.rate=.92;speechSynthesis.speak(u)}})};
+ const reply=raw=>{const t=raw.toLowerCase();if(/nivel|test|prueba|уров/.test(t))say("El test tiene diez preguntas y te orienta hasta B2. Pulsa «Hacer mi test de nivel» para empezar.","Тест состоит из десяти вопросов и определяет примерный уровень до B2. Нажми «Тест уровня», чтобы начать.");else if(/clase|horario|reserv|урок/.test(t))say("Las clases individuales son por Zoom con Masha, plataforma y pizarras digitales.","Индивидуальные уроки проходят с Машей в Zoom, с платформой и интерактивными досками.");else if(/precio|pago|cuesta|цен|стоим/.test(t))say("Hay cursos desde 400 pesos y clases desde 200 pesos. Puedes añadir un paquete a la canasta.","Есть курсы от 400 песо и уроки от 200 песо. Можно добавить пакет в корзину.");else if(/plataforma|juego|practic|игр|платформ/.test(t))say("La plataforma está dentro de esta página. Baja a «Aula interactiva» para probar un ejercicio.","Платформа находится на этой странице. Прокрути до раздела «Интерактивная платформа», чтобы попробовать упражнение.");else if(/hola|привет/.test(t))say("¡Hola! Pregúntame por el test, las clases, los precios o la plataforma.","Привет! Спроси меня о тесте, уроках, ценах или платформе.");else say("Estoy en modo de demostración. Puedo orientarte sobre el test, clases, precios y plataforma.","Я в демо-режиме. Могу подсказать о тесте, уроках, ценах и платформе.")};
+ const open=()=>{toggle.classList.add("launch");setTimeout(()=>{panel.classList.add("show");toggle.setAttribute("aria-expanded","true");toggle.classList.remove("launch");say("Hola, me llamo Nika. Ya hiciste el primer paso. Pregúntame lo que quieras sobre esta escuela.","Привет, меня зовут Ника. Ты уже сделала первый шаг. Спроси меня о школе, тесте, уроках или платформе.");},340)};
+ toggle.onclick=()=>panel.classList.contains("show")?(panel.classList.remove("show"),toggle.setAttribute("aria-expanded","false")):open();close.onclick=()=>{panel.classList.remove("show");toggle.setAttribute("aria-expanded","false")};speakBtn?.addEventListener("click",()=>say("Estoy lista para ayudarte. Pregúntame lo que quieras.","Я готова помогать. Спроси меня о чём хочешь."));chat?.addEventListener("submit",e=>{e.preventDefault();if(input?.value.trim()){reply(input.value);input.value=""}});
+ mic?.addEventListener("click",()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){if(message)message.textContent="Este navegador no reconoce el micrófono. Escríbeme abajo.";return}const r=new R();let got=false;r.lang=language?.value||"es-MX";r.interimResults=false;r.onresult=e=>{got=true;reply(e.results[0][0].transcript)};r.onerror=e=>{if(message)message.textContent=e.error==="not-allowed"?"Permite el micrófono en el navegador y pulsa otra vez.":"No recibí una frase. Prueba otra vez o escribe tu pregunta."};r.onend=()=>{if(!got&&message?.textContent.includes("Te escucho"))message.textContent="No recibí una frase. Prueba otra vez o escribe tu pregunta."};if(message)message.textContent="🎙 Te escucho… habla ahora.";try{r.start()}catch{if(message)message.textContent="Pulsa otra vez el micrófono para hablar."}});
 })();
