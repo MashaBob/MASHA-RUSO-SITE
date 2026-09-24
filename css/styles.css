@@ -613,3 +613,59 @@ footer .brand,footer a{
     margin:17px 0
   }
 }
+
+/* Mini-game motion: layered parallax above the Red Square image */
+.hero{
+  --scene-x:0px;
+  --scene-y:0px;
+  --card-x:0px;
+  --card-y:0px;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:-34px;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,250,244,.50),rgba(255,250,244,.08)),url("../assets/red-square-3d-hero.jpg") center / cover no-repeat;
+  opacity:.34;
+  transform:translate3d(var(--scene-x),var(--scene-y),0) scale(1.06);
+  transition:transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.hero > *{
+  position:relative;
+  z-index:1;
+}
+.hero:after{
+  z-index:2;
+  pointer-events:none;
+}
+.postcard{
+  transform:rotate(5deg) translate3d(var(--card-x),var(--card-y),0);
+  transition:transform .55s cubic-bezier(.2,.72,.2,1),box-shadow .35s ease;
+}
+.postcard:hover{
+  box-shadow:20px 24px 0 #8b313940;
+}
+.hero-spark{
+  position:absolute;
+  z-index:2;
+  width:12px;
+  height:12px;
+  border:1px solid rgba(255,239,199,.88);
+  border-radius:50%;
+  box-shadow:0 0 18px rgba(255,192,91,.75);
+  pointer-events:none;
+  animation:hero-sparkle var(--speed) ease-in-out infinite alternate;
+}
+.hero-spark:nth-of-type(1){top:20%;right:13%;--speed:3.4s}
+.hero-spark:nth-of-type(2){top:53%;right:36%;--speed:4.2s}
+.hero-spark:nth-of-type(3){bottom:17%;right:20%;--speed:2.8s}
+@keyframes hero-sparkle{
+  from{opacity:.25;transform:translateY(0) scale(.65)}
+  to{opacity:1;transform:translateY(-18px) scale(1.25)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero:before,.postcard{transition:none}
+  .hero-spark{animation:none}
+}
